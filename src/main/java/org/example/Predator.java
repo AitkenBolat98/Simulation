@@ -8,9 +8,11 @@ public class Predator extends Creature{
         setHealthPoints(healthPoints);
     }
     @Override
-    public void makeMove(Coordinates coordinates,Map map) {
+    public void makeMove(Coordinates Coordinates,Map map) {
 
     }
 
 
 }
+
+

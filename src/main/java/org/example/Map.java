@@ -6,60 +6,110 @@ import java.util.Objects;
 import java.util.Random;
 
 public class Map {
-    final int height;
-    final int width;
-    private Random random = new Random();
-    HashMap<Coordinates, Entity> objectOnMap = new HashMap<>();
-
-    public Map(int height, int width) {
-        objectOnMap = new HashMap<>();
-        this.height = height;
+    public Map(Integer width, Integer height) {
         this.width = width;
+        this.height = height;
     }
-    public void setPositions(List<Entity> entities){
+
+    private Integer width;
+    private Integer height;
+    final Integer numberOfPredators = 2;
+    final Integer numberOfHerbivores = 2;
+    final Integer numberOfGrass = 2;
+    final Integer numberOfRocks = 2;
+    final Integer numberOfTrees = 2;
+    Random random = new Random();
+
+    private HashMap<Coordinates,Entity> map = new HashMap<>();
+
+    public void setInitialPositions(List<Entity> entities){
         for(Entity entity:entities){
-            int numberOnMap = random.nextInt(4);
-            for(int numberOfEntity = 0; numberOfEntity < numberOnMap; numberOfEntity++){
-                Coordinates coordinates = new Coordinates(random.nextInt(10),random.nextInt(10));
-                setObjectsOnMap(coordinates,entity);
-            } ;
+            switch (entity.getName()){
+                case "H":
+                    for (int i = 0; i < numberOfHerbivores;i++){
+                        Coordinates coordinates = new Coordinates(random.nextInt(10)
+                                                                ,random.nextInt(10));
+                        map.put(coordinates,entity);
+                        break;
+                    }
+                case "P":
+                    for (int i = 0; i < numberOfPredators;i++){
+                        Coordinates coordinates = new Coordinates(random.nextInt(10)
+                                ,random.nextInt(10));
+                        map.put(coordinates,entity);
+                        break;
+                    }
+                case "G":
+                    for (int i = 0; i < numberOfGrass;i++){
+                        Coordinates coordinates = new Coordinates(random.nextInt(10)
+                                ,random.nextInt(10));
+                        map.put(coordinates,entity);
+                        break;
+                    }
+                case "R":
+                    for (int i = 0; i < numberOfRocks;i++){
+                        Coordinates coordinates = new Coordinates(random.nextInt(10)
+                                ,random.nextInt(10));
+                        map.put(coordinates,entity);
+                        break;
+                    }
+                case "T":
+                    for (int i = 0; i < numberOfTrees;i++){
+                        Coordinates coordinates = new Coordinates(random.nextInt(10)
+                                ,random.nextInt(10));
+                        map.put(coordinates,entity);
+                        break;
+                    }
+                default:
+                    System.out.println("such object does not exist");
+            }
         }
     }
-
-    private void setObjectsOnMap(Coordinates coordinates, Entity entity){
-        objectOnMap.put(coordinates, entity);
+    public Entity getAllEntitiesOfType(Entity entity){
+        map.
     }
-    public void deleteObjectsFromMap(Coordinates coordinates){
-        objectOnMap.remove(coordinates);
+    public void deleteEntity(Coordinates coordinates){
+        map.remove(coordinates);
     }
     public boolean contains(Coordinates coordinates){
-        return objectOnMap.containsKey(coordinates);
+        return map.containsKey(coordinates);
+    }
+    public Entity checkOccupiedType(Coordinates coordinates){
+        Entity entity = getEntity(coordinates);
+        return entity;
     }
     public Entity getEntity(Coordinates coordinates){
-        return objectOnMap.get(coordinates);
+        return map.get(coordinates);
     }
-    public void changePositions(Coordinates newCoordinates){
-
+    public void setPosition(Coordinates coordinates,Entity entity){
+        map.put(coordinates,entity);
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Map map = (Map) o;
-        return Objects.equals(objectOnMap, map.objectOnMap);
+        Map map1 = (Map) o;
+        return Objects.equals(map, map1.map);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(objectOnMap);
+        return Objects.hash(map);
     }
 
-    public int getHeight() {
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public Integer getHeight() {
         return height;
     }
 
-    public int getWidth() {
-        return width;
+    public void setHeight(Integer height) {
+        this.height = height;
     }
 }
